@@ -371,6 +371,69 @@
         <p><strong>Supervised:</strong> You have labelled data (X → y). Model learns a mapping. Examples: regression, classification.</p>
         <p><strong>Unsupervised:</strong> No labels. Find structure in data. Examples: k-means clustering, PCA, autoencoders. Used for customer segmentation, anomaly detection.</p>
         <p><strong>Reinforcement:</strong> Agent takes actions, receives rewards. Less common in most consulting work but relevant for pricing optimisation and decision-making systems.</p>
+        <div style="text-align:center; margin:16px 0;"><svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" style="max-width:600px; width:100%; height:auto;">
+          <!-- Supervised -->
+          <g>
+            <rect x="20" y="30" width="120" height="60" fill="#e8f0ff" stroke="#5b52e0" stroke-width="2" rx="4"/>
+            <text x="80" y="55" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Input</text>
+            <text x="80" y="82" font-size="12" text-anchor="middle" fill="#1a1a2e">(X)</text>
+
+            <path d="M 140 60 L 170 60" stroke="#5b52e0" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+            <rect x="170" y="30" width="120" height="60" fill="#fff4e8" stroke="#e8527a" stroke-width="2" rx="4"/>
+            <text x="230" y="55" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Label</text>
+            <text x="230" y="82" font-size="12" text-anchor="middle" fill="#1a1a2e">(y)</text>
+
+            <path d="M 290 60 L 320 60" stroke="#5b52e0" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+            <rect x="320" y="30" width="120" height="60" fill="#e8ffe8" stroke="#2eb866" stroke-width="2" rx="4"/>
+            <text x="380" y="55" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Model</text>
+            <text x="380" y="82" font-size="12" text-anchor="middle" fill="#1a1a2e">learns</text>
+
+            <text x="230" y="20" font-size="13" font-weight="bold" text-anchor="middle" fill="#5b52e0">Supervised</text>
+          </g>
+
+          <!-- Unsupervised -->
+          <g>
+            <rect x="20" y="120" width="150" height="60" fill="#e8f0ff" stroke="#5b52e0" stroke-width="2" rx="4"/>
+            <text x="95" y="145" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Input (X)</text>
+            <text x="95" y="168" font-size="11" text-anchor="middle" fill="#1a1a2e">No labels</text>
+
+            <path d="M 170 150 L 200 150" stroke="#5b52e0" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+            <rect x="200" y="120" width="150" height="60" fill="#e8ffe8" stroke="#2eb866" stroke-width="2" rx="4"/>
+            <text x="275" y="145" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Model finds</text>
+            <text x="275" y="168" font-size="11" text-anchor="middle" fill="#1a1a2e">clusters/patterns</text>
+
+            <text x="95" y="110" font-size="13" font-weight="bold" text-anchor="middle" fill="#5b52e0">Unsupervised</text>
+          </g>
+
+          <!-- Reinforcement -->
+          <g>
+            <circle cx="420" cy="150" r="30" fill="#fff4e8" stroke="#e8527a" stroke-width="2"/>
+            <text x="420" y="145" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Agent</text>
+            <text x="420" y="160" font-size="11" text-anchor="middle" fill="#1a1a2e">Action</text>
+
+            <circle cx="520" cy="150" r="30" fill="#e8f0ff" stroke="#5b52e0" stroke-width="2"/>
+            <text x="520" y="145" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Env</text>
+            <text x="520" y="160" font-size="11" text-anchor="middle" fill="#1a1a2e">Reward</text>
+
+            <path d="M 450 135 L 490 135" stroke="#e8527a" stroke-width="2" fill="none" marker-end="url(#arrowhead2)"/>
+            <path d="M 490 165 L 450 165" stroke="#5b52e0" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+            <text x="470" y="110" font-size="13" font-weight="bold" text-anchor="middle" fill="#5b52e0">Reinforcement</text>
+          </g>
+
+          <!-- Arrow markers -->
+          <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <polygon points="0 0, 10 3, 0 6" fill="#5b52e0"/>
+            </marker>
+            <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <polygon points="0 0, 10 3, 0 6" fill="#e8527a"/>
+            </marker>
+          </defs>
+        </svg></div>
         <div class="interview-q"><span class="q-label">💬 Likely Interview Q</span>"Walk me through a supervised learning problem you'd set up to predict customer churn."</div>
       </div>
     </div>
@@ -384,6 +447,46 @@
         <p><strong>Bias:</strong> Error from wrong assumptions. High bias = underfitting (model too simple, misses signal).</p>
         <p><strong>Variance:</strong> Error from sensitivity to fluctuations in training data. High variance = overfitting (model memorises noise).</p>
         <p>Total Error = Bias² + Variance + Irreducible Noise. You want to find the sweet spot.</p>
+        <div style="text-align:center; margin:16px 0;"><svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" style="max-width:600px; width:100%; height:auto;">
+          <!-- Grid -->
+          <line x1="60" y1="240" x2="580" y2="240" stroke="#d0d0e0" stroke-width="1"/>
+          <line x1="60" y1="40" x2="60" y2="240" stroke="#d0d0e0" stroke-width="1"/>
+
+          <!-- Axis labels -->
+          <text x="320" y="270" font-size="12" text-anchor="middle" fill="#1a1a2e">Model Complexity →</text>
+          <text x="20" y="140" font-size="12" text-anchor="middle" fill="#1a1a2e" transform="rotate(-90 20 140)">Error</text>
+
+          <!-- Bias curve (decreasing) -->
+          <path d="M 80 200 Q 200 150 350 100 T 550 60" fill="none" stroke="#5b52e0" stroke-width="2.5" stroke-dasharray="5,5"/>
+          <text x="420" y="75" font-size="11" fill="#5b52e0" font-weight="bold">Bias</text>
+
+          <!-- Variance curve (increasing) -->
+          <path d="M 80 80 Q 200 110 350 150 T 550 200" fill="none" stroke="#e8527a" stroke-width="2.5" stroke-dasharray="5,5"/>
+          <text x="530" y="220" font-size="11" fill="#e8527a" font-weight="bold">Variance</text>
+
+          <!-- Total error curve (U-shaped) -->
+          <path d="M 80 140 Q 200 90 280 70 Q 350 60 420 70 Q 500 90 550 130" fill="none" stroke="#2eb866" stroke-width="3"/>
+          <text x="310" y="50" font-size="11" fill="#2eb866" font-weight="bold">Total Error</text>
+
+          <!-- Sweet spot marker -->
+          <circle cx="280" cy="70" r="4" fill="#2eb866"/>
+          <line x1="280" y1="70" x2="280" y2="90" stroke="#2eb866" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <text x="280" y="105" font-size="10" text-anchor="middle" fill="#2eb866" font-weight="bold">Sweet Spot</text>
+
+          <!-- Legend -->
+          <rect x="380" y="130" width="180" height="90" fill="#ffffff" stroke="#d0d0e0" stroke-width="1" rx="4"/>
+          <line x1="390" y1="145" x2="420" y2="145" stroke="#5b52e0" stroke-width="2.5" stroke-dasharray="5,5"/>
+          <text x="430" y="148" font-size="10" fill="#1a1a2e">Bias (underfitting)</text>
+
+          <line x1="390" y1="165" x2="420" y2="165" stroke="#e8527a" stroke-width="2.5" stroke-dasharray="5,5"/>
+          <text x="430" y="168" font-size="10" fill="#1a1a2e">Variance (overfitting)</text>
+
+          <line x1="390" y1="185" x2="420" y2="185" stroke="#2eb866" stroke-width="3"/>
+          <text x="430" y="188" font-size="10" fill="#1a1a2e">Total error (target)</text>
+
+          <text x="390" y="208" font-size="9" fill="#6868a0">Find balance between</text>
+          <text x="390" y="220" font-size="9" fill="#6868a0">simple & complex model</text>
+        </svg></div>
         <div class="code-block"><span class="comment"># Signs of overfitting:</span>
 Train accuracy: 99% | Val accuracy: 72%  ← big gap = overfit
 <span class="comment"># Fixes: regularization (L1/L2), dropout, more data, simpler model</span></div>
@@ -436,6 +539,92 @@ Train accuracy: 99% | Val accuracy: 72%  ← big gap = overfit
           <li><strong>F1:</strong> Harmonic mean of precision & recall. Good single metric when both matter.</li>
           <li><strong>AUC-ROC:</strong> Plots TPR vs FPR at different thresholds. Good for imbalanced data. AUC = probability the model ranks a random positive above a random negative.</li>
         </ul>
+        <div style="text-align:center; margin:16px 0;"><svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg" style="max-width:500px; width:100%; height:auto;">
+          <!-- Title -->
+          <text x="250" y="25" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Confusion Matrix</text>
+
+          <!-- Header row -->
+          <text x="180" y="60" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Predicted</text>
+          <text x="280" y="60" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Positive</text>
+          <text x="380" y="60" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Negative</text>
+
+          <!-- Left header -->
+          <text x="50" y="115" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Actual</text>
+          <text x="50" y="150" font-size="10" text-anchor="middle" fill="#1a1a2e">Positive</text>
+          <text x="50" y="230" font-size="10" text-anchor="middle" fill="#1a1a2e">Negative</text>
+
+          <!-- TP cell (True Positive) -->
+          <rect x="120" y="130" width="120" height="80" fill="#c8e6c9" stroke="#2eb866" stroke-width="2" rx="4"/>
+          <text x="180" y="160" font-size="13" font-weight="bold" text-anchor="middle" fill="#1a1a2e">TP</text>
+          <text x="180" y="180" font-size="11" text-anchor="middle" fill="#1a1a2e">True Positive</text>
+          <text x="180" y="195" font-size="10" text-anchor="middle" fill="#2eb866" font-weight="bold">Correct!</text>
+          <text x="180" y="205" font-size="9" text-anchor="middle" fill="#6868a0">Caught the disease</text>
+
+          <!-- FP cell (False Positive) -->
+          <rect x="280" y="130" width="120" height="80" fill="#ffcdd2" stroke="#e8527a" stroke-width="2" rx="4"/>
+          <text x="340" y="160" font-size="13" font-weight="bold" text-anchor="middle" fill="#1a1a2e">FP</text>
+          <text x="340" y="180" font-size="11" text-anchor="middle" fill="#1a1a2e">False Positive</text>
+          <text x="340" y="195" font-size="10" text-anchor="middle" fill="#e8527a" font-weight="bold">Error!</text>
+          <text x="340" y="205" font-size="9" text-anchor="middle" fill="#6868a0">False alarm</text>
+
+          <!-- FN cell (False Negative) -->
+          <rect x="120" y="210" width="120" height="50" fill="#fff9c4" stroke="#f9a825" stroke-width="2" rx="4"/>
+          <text x="180" y="230" font-size="13" font-weight="bold" text-anchor="middle" fill="#1a1a2e">FN</text>
+          <text x="180" y="250" font-size="10" text-anchor="middle" fill="#1a1a2e">False Negative (Miss)</text>
+
+          <!-- TN cell (True Negative) -->
+          <rect x="280" y="210" width="120" height="50" fill="#c8e6c9" stroke="#2eb866" stroke-width="2" rx="4"/>
+          <text x="340" y="230" font-size="13" font-weight="bold" text-anchor="middle" fill="#1a1a2e">TN</text>
+          <text x="340" y="250" font-size="10" text-anchor="middle" fill="#1a1a2e">True Negative (OK)</text>
+
+          <!-- Metric annotations -->
+          <g>
+            <text x="50" y="280" font-size="9" fill="#6868a0">Precision = TP/(TP+FP)  |  Recall = TP/(TP+FN)  |  Accuracy = (TP+TN)/total</text>
+          </g>
+        </svg></div>
+
+        <div style="text-align:center; margin:16px 0;"><svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" style="max-width:600px; width:100%; height:auto;">
+          <!-- Title -->
+          <text x="300" y="25" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a1a2e">ROC Curve</text>
+
+          <!-- Grid -->
+          <line x1="70" y1="260" x2="570" y2="260" stroke="#d0d0e0" stroke-width="1"/>
+          <line x1="70" y1="40" x2="70" y2="260" stroke="#d0d0e0" stroke-width="1"/>
+
+          <!-- Grid lines -->
+          <line x1="70" y1="190" x2="570" y2="190" stroke="#d0d0e0" stroke-width="0.5" stroke-dasharray="2,2"/>
+          <line x1="70" y1="120" x2="570" y2="120" stroke="#d0d0e0" stroke-width="0.5" stroke-dasharray="2,2"/>
+          <line x1="230" y1="40" x2="230" y2="260" stroke="#d0d0e0" stroke-width="0.5" stroke-dasharray="2,2"/>
+          <line x1="390" y1="40" x2="390" y2="260" stroke="#d0d0e0" stroke-width="0.5" stroke-dasharray="2,2"/>
+
+          <!-- Axis labels -->
+          <text x="320" y="290" font-size="11" text-anchor="middle" fill="#1a1a2e">False Positive Rate (FPR) →</text>
+          <text x="20" y="150" font-size="11" text-anchor="middle" fill="#1a1a2e" transform="rotate(-90 20 150)">True Positive Rate (TPR)</text>
+
+          <!-- Diagonal baseline (random) -->
+          <line x1="70" y1="260" x2="570" y2="40" stroke="#d0d0e0" stroke-width="2" stroke-dasharray="5,5"/>
+          <text x="480" y="110" font-size="10" fill="#6868a0">Random (AUC=0.5)</text>
+
+          <!-- AUC shaded area -->
+          <path d="M 70 260 Q 150 240 230 180 Q 310 120 390 90 Q 470 60 570 40 L 570 260 Z" fill="#c8e6c9" opacity="0.5" stroke="none"/>
+
+          <!-- ROC curve (better model) -->
+          <path d="M 70 260 Q 150 240 230 180 Q 310 120 390 90 Q 470 60 570 40" fill="none" stroke="#2eb866" stroke-width="3"/>
+
+          <!-- AUC label -->
+          <text x="300" y="160" font-size="12" font-weight="bold" text-anchor="middle" fill="#2eb866">AUC = 0.85</text>
+          <text x="300" y="180" font-size="10" text-anchor="middle" fill="#2eb866">(higher is better)</text>
+
+          <!-- Axis ticks -->
+          <text x="70" y="275" font-size="9" text-anchor="middle" fill="#6868a0">0</text>
+          <text x="230" y="275" font-size="9" text-anchor="middle" fill="#6868a0">0.5</text>
+          <text x="390" y="275" font-size="9" text-anchor="middle" fill="#6868a0">1.0</text>
+
+          <text x="55" y="260" font-size="9" text-anchor="end" fill="#6868a0">0</text>
+          <text x="55" y="190" font-size="9" text-anchor="end" fill="#6868a0">0.5</text>
+          <text x="55" y="45" font-size="9" text-anchor="end" fill="#6868a0">1.0</text>
+        </svg></div>
+
         <div class="interview-q"><span class="q-label">💬 Interview Q</span>"You're predicting loan defaults (1% class). Accuracy of 99% is great, right?" No — this model always predicts "no default." Use AUC-ROC or F1 instead.</div>
       </div>
     </div>
@@ -655,6 +844,65 @@ color = ['red', 'blue', 'red']
         <p><strong>Optimization:</strong> Adjust model weights to minimize loss. Gradient descent: compute gradient (slope of loss), step in the direction that reduces it.</p>
         <p><strong>Learning rate:</strong> Step size. Too high → overshoot minima (diverge). Too low → crawl slowly (take forever).</p>
         <p><strong>Variants:</strong> SGD (update per sample), mini-batch (update per batch), Adam (adaptive learning rate per parameter).</p>
+        <div style="text-align:center; margin:16px 0;"><svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" style="max-width:600px; width:100%; height:auto;">
+          <!-- Title -->
+          <text x="300" y="25" font-size="13" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Training Loss Over Epochs</text>
+
+          <!-- Grid -->
+          <line x1="70" y1="260" x2="570" y2="260" stroke="#d0d0e0" stroke-width="1"/>
+          <line x1="70" y1="40" x2="70" y2="260" stroke="#d0d0e0" stroke-width="1"/>
+
+          <!-- Grid lines -->
+          <line x1="70" y1="150" x2="570" y2="150" stroke="#d0d0e0" stroke-width="0.5" stroke-dasharray="2,2"/>
+          <line x1="70" y1="100" x2="570" y2="100" stroke="#d0d0e0" stroke-width="0.5" stroke-dasharray="2,2"/>
+
+          <!-- Axis labels -->
+          <text x="320" y="290" font-size="11" text-anchor="middle" fill="#1a1a2e">Epochs →</text>
+          <text x="20" y="150" font-size="11" text-anchor="middle" fill="#1a1a2e" transform="rotate(-90 20 150)">Loss</text>
+
+          <!-- Learning Rate Too High (oscillating) -->
+          <path d="M 100 100 L 130 140 L 160 110 L 190 160 L 220 120 L 250 150 L 280 130"
+                fill="none" stroke="#e8527a" stroke-width="2.5"/>
+          <circle cx="100" cy="100" r="3" fill="#e8527a"/>
+          <text x="165" y="35" font-size="10" fill="#e8527a" font-weight="bold">LR too high</text>
+          <text x="165" y="48" font-size="9" fill="#e8527a">(oscillates)</text>
+
+          <!-- Learning Rate Too Low (flat) -->
+          <path d="M 100 240 L 200 238 L 300 236 L 400 235 L 500 234 L 570 233"
+                fill="none" stroke="#5b52e0" stroke-width="2.5"/>
+          <circle cx="100" cy="240" r="3" fill="#5b52e0"/>
+          <text x="250" y="255" font-size="10" fill="#5b52e0" font-weight="bold">LR too low (flat/slow)</text>
+
+          <!-- Learning Rate Just Right (smooth descent) -->
+          <path d="M 100 180 Q 200 140 300 100 Q 400 70 500 55 Q 550 50 570 48"
+                fill="none" stroke="#2eb866" stroke-width="3"/>
+          <circle cx="100" cy="180" r="3" fill="#2eb866"/>
+          <circle cx="300" cy="100" r="3" fill="#2eb866"/>
+          <circle cx="570" cy="48" r="3" fill="#2eb866"/>
+          <text x="380" y="75" font-size="10" fill="#2eb866" font-weight="bold">LR just right ✓</text>
+          <text x="380" y="88" font-size="9" fill="#2eb866">(smooth descent)</text>
+
+          <!-- Annotations -->
+          <line x1="300" y1="100" x2="300" y2="265" stroke="#2eb866" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="300" y="275" font-size="9" text-anchor="middle" fill="#2eb866">Sweet spot</text>
+
+          <!-- Legend box -->
+          <rect x="320" y="120" width="230" height="110" fill="#ffffff" stroke="#d0d0e0" stroke-width="1" rx="4"/>
+          <text x="330" y="140" font-size="10" font-weight="bold" fill="#1a1a2e">Learning Rate Effects:</text>
+
+          <line x1="330" y1="150" x2="360" y2="150" stroke="#e8527a" stroke-width="2.5"/>
+          <text x="370" y="153" font-size="9" fill="#1a1a2e">Too high: diverges</text>
+
+          <line x1="330" y1="170" x2="360" y2="170" stroke="#5b52e0" stroke-width="2.5"/>
+          <text x="370" y="173" font-size="9" fill="#1a1a2e">Too low: slow progress</text>
+
+          <line x1="330" y1="190" x2="360" y2="190" stroke="#2eb866" stroke-width="3"/>
+          <text x="370" y="193" font-size="9" fill="#1a1a2e">Just right: optimal</text>
+
+          <text x="330" y="210" font-size="8" fill="#6868a0">Monitor val loss too!</text>
+          <text x="330" y="220" font-size="8" fill="#6868a0">If it increases while train</text>
+          <text x="330" y="228" font-size="8" fill="#6868a0">loss decreases = overfitting</text>
+        </svg></div>
         <div class="tip-box"><span class="tip-label">💡 Tip</span>Adam is often the "set it and forget it" choice. If loss doesn't decrease, try lowering learning rate or checking for bugs in data preprocessing.</div>
       </div>
     </div>
@@ -680,6 +928,76 @@ color = ['red', 'blue', 'red']
         <p><strong>Attention:</strong> Mechanism that lets the model focus on relevant parts of the input. Multi-head attention = multiple "views" of relevance.</p>
         <p><strong>Positional Encoding:</strong> Transformers don't have inherent sequence order (unlike RNNs). Positional embeddings tell the model word order.</p>
         <p><strong>Self-Attention:</strong> Each token attends to all other tokens. Learns what to focus on. Queries, Keys, Values (Q, K, V) framework.</p>
+        <div style="text-align:center; margin:16px 0;"><svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="max-width:600px; width:100%; height:auto;">
+          <!-- Title -->
+          <text x="340" y="20" font-size="13" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Transformer Block</text>
+
+          <!-- Input -->
+          <rect x="10" y="40" width="80" height="50" fill="#e8f0ff" stroke="#5b52e0" stroke-width="2" rx="4"/>
+          <text x="50" y="62" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Input</text>
+          <text x="50" y="80" font-size="10" text-anchor="middle" fill="#1a1a2e">Tokens</text>
+
+          <!-- Arrow -->
+          <path d="M 90 65 L 115 65" stroke="#5b52e0" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+          <!-- Positional Encoding -->
+          <rect x="115" y="40" width="90" height="50" fill="#fff4e8" stroke="#e8527a" stroke-width="2" rx="4"/>
+          <text x="160" y="62" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Positional</text>
+          <text x="160" y="77" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Encoding</text>
+
+          <!-- Arrow -->
+          <path d="M 205 65 L 230 65" stroke="#5b52e0" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+          <!-- Multi-Head Attention -->
+          <rect x="230" y="40" width="100" height="50" fill="#e8ffe8" stroke="#2eb866" stroke-width="2" rx="4"/>
+          <text x="280" y="62" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Multi-Head</text>
+          <text x="280" y="77" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Attention</text>
+
+          <!-- Arrow -->
+          <path d="M 330 65 L 360 65" stroke="#5b52e0" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+          <!-- Add & Norm -->
+          <rect x="360" y="40" width="80" height="50" fill="#f0e8ff" stroke="#5b52e0" stroke-width="2" rx="4"/>
+          <text x="400" y="62" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Add &</text>
+          <text x="400" y="77" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Norm</text>
+
+          <!-- Arrow -->
+          <path d="M 440 65 L 465 65" stroke="#5b52e0" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+          <!-- Feed Forward -->
+          <rect x="465" y="40" width="90" height="50" fill="#fff4e8" stroke="#e8527a" stroke-width="2" rx="4"/>
+          <text x="510" y="62" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Feed</text>
+          <text x="510" y="77" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Forward</text>
+
+          <!-- Arrow -->
+          <path d="M 555 65 L 580 65" stroke="#5b52e0" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+          <!-- Output -->
+          <rect x="580" y="40" width="80" height="50" fill="#e8ffe8" stroke="#2eb866" stroke-width="2" rx="4"/>
+          <text x="620" y="62" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Output</text>
+          <text x="620" y="80" font-size="10" text-anchor="middle" fill="#1a1a2e">Tokens</text>
+
+          <!-- Residual connection (skip) -->
+          <path d="M 50 40 Q 340 -10 620 40" stroke="#d0d0e0" stroke-width="1.5" stroke-dasharray="3,3" fill="none"/>
+          <text x="340" y="15" font-size="9" text-anchor="middle" fill="#6868a0">Residual connections</text>
+
+          <!-- Key concepts -->
+          <g>
+            <rect x="10" y="115" width="650" height="70" fill="#eeeef6" stroke="#d0d0e0" stroke-width="1" rx="4"/>
+            <text x="340" y="135" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a1a2e">Key Components</text>
+
+            <text x="20" y="155" font-size="9" fill="#1a1a2e"><tspan font-weight="bold">Q, K, V:</tspan> Query, Key, Value vectors for attention scoring</text>
+            <text x="20" y="170" font-size="9" fill="#1a1a2e"><tspan font-weight="bold">Add & Norm:</tspan> Residual connection + Layer Normalization (stabilizes training)</text>
+            <text x="20" y="185" font-size="9" fill="#1a1a2e"><tspan font-weight="bold">Repeat:</tspan> Stack multiple transformer blocks (GPT-3 has 96 layers!)</text>
+          </g>
+
+          <!-- Arrow markers -->
+          <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <polygon points="0 0, 10 3, 0 6" fill="#5b52e0"/>
+            </marker>
+          </defs>
+        </svg></div>
         <div class="code-block"><span class="comment"># Attention equation (simplified)</span>
 Attention(Q, K, V) = softmax(Q * K^T / sqrt(d_k)) * V
 <span class="comment"># High scores = strong attention</span></div>
