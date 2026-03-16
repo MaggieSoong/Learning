@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ML Interview Prep — Complete Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: #2a2a3e;
+    --accent: #6c63ff;
+    --accent2: #ff6584;
+    --accent3: #43e97b;
+    --text: #e8e8f0;
+    --muted: #7070a0;
+    --tag-bg: #1e1e30;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  header {
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 32px;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* Tab nav */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 32px;
+    background: var(--surface);
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 7px;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .tab-btn:hover { color: var(--text); background: var(--surface2); }
+  .tab-btn.active {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(108,99,255,0.4);
+  }
+
+  /* Sections */
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn 0.3s ease; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .card:hover { border-color: var(--accent); transform: translateX(4px); }
+  .card:hover::before { opacity: 1; }
+  .card.open { border-color: var(--accent); }
+  .card.open::before { opacity: 1; }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .badge-core { background: rgba(108,99,255,0.2); color: var(--accent); }
+  .badge-imp { background: rgba(255,101,132,0.2); color: var(--accent2); }
+  .badge-nice { background: rgba(67,233,123,0.2); color: var(--accent3); }
+
+  .toggle-icon {
+    color: var(--muted);
+    font-size: 18px;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .card.open .toggle-icon { transform: rotate(45deg); color: var(--accent); }
+
+  .card-body {
+    display: none;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    animation: fadeIn 0.2s ease;
+  }
+  .card.open .card-body { display: block; }
+
+  .card-body p {
+    color: #b0b0c8;
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+
+  .card-body strong { color: var(--text); font-weight: 400; }
+
+  .code-block {
+    background: #0d0d15;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #a8d8a8;
+    margin: 12px 0;
+    overflow-x: auto;
+  }
+
+  .code-block .comment { color: var(--muted); font-style: italic; }
+  .code-block .keyword { color: #c792ea; }
+  .code-block .string { color: #f78c6c; }
+  .code-block .func { color: #82aaff; }
+
+  .basics-sub { display: none; }
+  .basics-sub.active { display: block; animation: fadeIn 0.3s ease; }
+
+  code {
+    background: var(--surface2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--accent3);
+  }
+
+  .tip-box {
+    background: rgba(108,99,255,0.08);
+    border: 1px solid rgba(108,99,255,0.3);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 12px 0;
+    font-size: 12px;
+    color: #a0a0d0;
+    line-height: 1.7;
+  }
+
+  .tip-box .tip-label {
+    color: var(--accent);
+    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .interview-q {
+    background: rgba(255,101,132,0.07);
+    border: 1px solid rgba(255,101,132,0.25);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 12px 0;
+    font-size: 12px;
+    color: #c0a0a8;
+    line-height: 1.7;
+  }
+  .interview-q .q-label {
+    color: var(--accent2);
+    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  ul.points {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0;
+  }
+  ul.points li {
+    color: #b0b0c8;
+    font-size: 13px;
+    line-height: 1.7;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  ul.points li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .progress-label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .progress-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+  .progress-count { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="eyebrow">ML / AI · Interview Prep</div>
+    <h1>ML / GenAI / NLP<br><span>Fundamentals</span></h1>
+    <p class="subtitle">Tap any topic to expand. Badges: <span style="color:var(--accent)">CORE</span> = must know · <span style="color:var(--accent2)">IMP</span> = likely tested · <span style="color:var(--accent3)">NICE</span> = bonus</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('ml')">🤖 Machine Learning</button>
+    <button class="tab-btn" onclick="switchTab('basics')">📐 ML Basics</button>
+    <button class="tab-btn" onclick="switchTab('genai')">✨ GenAI / LLMs</button>
+    <button class="tab-btn" onclick="switchTab('nlp')">📝 NLP</button>
+  </div>
+
+  <!-- MACHINE LEARNING -->
+  <div id="tab-ml" class="section active">
+    <div class="progress-bar">
+      <span class="progress-label">Topics covered</span>
+      <div class="progress-track"><div class="progress-fill" id="ml-progress" style="width:0%"></div></div>
+      <span class="progress-count" id="ml-count">0 / 12</span>
+    </div>
+
+    <div class="section-label">Foundations</div>
+
+    <div class="card" onclick="toggle(this,'ml',12)">
+      <div class="card-header">
+        <div class="card-title">Supervised vs Unsupervised vs Reinforcement Learning</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Supervised:</strong> You have labelled data (X → y). Model learns a mapping. Examples: regression, classification.</p>
+        <p><strong>Unsupervised:</strong> No labels. Find structure in data. Examples: k-means clustering, PCA, autoencoders. Used for customer segmentation, anomaly detection.</p>
+        <p><strong>Reinforcement:</strong> Agent takes actions, receives rewards. Less common in most consulting work but relevant for pricing optimisation and decision-making systems.</p>
+        <div class="interview-q"><span class="q-label">💬 Likely Interview Q</span>"Walk me through a supervised learning problem you'd set up to predict customer churn."</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'ml',12)">
+      <div class="card-header">
+        <div class="card-title">Bias-Variance Tradeoff</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Bias:</strong> Error from wrong assumptions. High bias = underfitting (model too simple, misses signal).</p>
+        <p><strong>Variance:</strong> Error from sensitivity to fluctuations in training data. High variance = overfitting (model memorises noise).</p>
+        <p>Total Error = Bias² + Variance + Irreducible Noise. You want to find the sweet spot.</p>
+        <div class="code-block"><span class="comment"># Signs of overfitting:</span>
+Train accuracy: 99% | Val accuracy: 72%  ← big gap = overfit
+<span class="comment"># Fixes: regularization (L1/L2), dropout, more data, simpler model</span></div>
+        <div class="tip-box"><span class="tip-label">💡 Tip</span>In credit and risk models, regulators care deeply about overfitting. Always mention validation on out-of-time samples.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'ml',12)">
+      <div class="card-header">
+        <div class="card-title">Key Algorithms: When to Use What</div>
+        <div class="card-meta"><span class="badge badge-imp">IMP</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <ul class="points">
+          <li><strong>Linear/Logistic Regression</strong> — interpretable, fast, great baseline; used in regulated industries for interpretability</li>
+          <li><strong>Decision Trees</strong> — super interpretable, prone to overfitting; use for early exploration or with ensembles</li>
+          <li><strong>Random Forests</strong> — reduces overfitting vs single tree, good all-rounder; often the go-to for prediction tasks on tabular data</li>
+          <li><strong>Gradient Boosting (XGBoost, LightGBM)</strong> — state-of-the-art for tabular data; slower to train but often wins competitions</li>
+          <li><strong>SVMs</strong> — great for high-dimensional data; can be slow to train on large datasets</li>
+          <li><strong>Neural Networks</strong> — powerful but black-box; better for images, text, sequential data</li>
+        </ul>
+        <div class="interview-q"><span class="q-label">💬 Interview Q</span>"You have a tabular dataset with 100K rows. Which algorithm do you pick first, and why?"</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'ml',12)">
+      <div class="card-header">
+        <div class="card-title">Cross-Validation & Proper Test Strategy</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Why:</strong> You need to estimate how your model performs on unseen data. Training accuracy lies.</p>
+        <p><strong>k-Fold CV:</strong> Split data into k folds. Train on k-1, test on 1. Repeat k times. Average the scores. Reduces variance in your estimate.</p>
+        <p><strong>Time-Series CV:</strong> Never shuffle! Use expanding window: train on [t1, t2), test on [t2, t3). Models must predict the future, not the past.</p>
+        <p><strong>Stratified CV:</strong> For imbalanced data, ensure each fold has the same class distribution.</p>
+        <div class="tip-box"><span class="tip-label">💡 Tip</span>Common mistake: CV on full data, then test on held-out set. The held-out set should have been removed before CV.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'ml',12)">
+      <div class="card-header">
+        <div class="card-title">Evaluation Metrics: Accuracy, Precision, Recall, F1, AUC-ROC</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <ul class="points">
+          <li><strong>Accuracy:</strong> (TP+TN)/(TP+TN+FP+FN). Good baseline, misleading for imbalanced data.</li>
+          <li><strong>Precision:</strong> TP/(TP+FP). When you predict positive, how often are you right? Minimize false alarms.</li>
+          <li><strong>Recall:</strong> TP/(TP+FN). Of all true positives, how many did you catch? Minimize missed cases.</li>
+          <li><strong>F1:</strong> Harmonic mean of precision & recall. Good single metric when both matter.</li>
+          <li><strong>AUC-ROC:</strong> Plots TPR vs FPR at different thresholds. Good for imbalanced data. AUC = probability the model ranks a random positive above a random negative.</li>
+        </ul>
+        <div class="interview-q"><span class="q-label">💬 Interview Q</span>"You're predicting loan defaults (1% class). Accuracy of 99% is great, right?" No — this model always predicts "no default." Use AUC-ROC or F1 instead.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'ml',12)">
+      <div class="card-header">
+        <div class="card-title">Hyperparameter Tuning & Regularization</div>
+        <div class="card-meta"><span class="badge badge-imp">IMP</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Hyperparameters:</strong> Learning rate, tree depth, lambda (regularization), dropout rate, etc. Set before training.</p>
+        <p><strong>Tuning methods:</strong> Grid search (exhaustive), random search, Bayesian optimisation (smarter).</p>
+        <p><strong>Regularization (combat overfitting):</strong></p>
+        <ul class="points">
+          <li><strong>L1 (Lasso):</strong> Penalizes |w|. Encourages sparsity (some weights → 0). Good for feature selection.</li>
+          <li><strong>L2 (Ridge):</strong> Penalizes w². Shrinks all weights uniformly. Generally more stable.</li>
+          <li><strong>Early Stopping:</strong> Monitor validation loss. Stop training when it starts increasing.</li>
+          <li><strong>Dropout:</strong> (Neural nets) Randomly turn off neurons during training. Reduces co-adaptation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'ml',12)">
+      <div class="card-header">
+        <div class="card-title">Ensemble Methods Deep Dive</div>
+        <div class="card-meta"><span class="badge badge-imp">IMP</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Bagging (Bootstrap Aggregating):</strong> Train independent models on different random subsets of data. Average predictions. Reduces variance. Example: Random Forests.</p>
+        <p><strong>Boosting:</strong> Train models sequentially. Each new model focuses on examples the previous ones got wrong. Reduces bias. Examples: AdaBoost, Gradient Boosting, XGBoost.</p>
+        <p><strong>Stacking:</strong> Train multiple diverse models (base learners), then feed their predictions into a meta-learner. Can combine different model types.</p>
+        <p><strong>When to use which:</strong> Bagging → low bias high variance (e.g., deep trees). Boosting → high bias (e.g., shallow trees, weak learners). Stacking → squeeze every % of performance.</p>
+        <div class="tip-box"><span class="tip-label">💡 Tip</span>Ensembles work best when base models are diverse (different algorithms, different feature subsets) and uncorrelated.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'ml',12)">
+      <div class="card-header">
+        <div class="card-title">Model Interpretability & Explainability</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Why it matters:</strong> In regulated industries (finance, healthcare), stakeholders need to understand *why* the model made a decision.</p>
+        <ul class="points">
+          <li><strong>Feature Importance:</strong> Which features matter most? Tree-based models give built-in importance (Gini, gain). Others use permutation importance.</li>
+          <li><strong>SHAP Values:</strong> Game-theoretic approach. Tells you each feature's contribution to each prediction. Local + global explanations.</li>
+          <li><strong>LIME:</strong> Approximate model locally with interpretable model (e.g., linear). Explains individual predictions.</li>
+          <li><strong>Partial Dependence Plots:</strong> Marginalise out other features. See how model output changes with one feature.</li>
+          <li><strong>Feature Effect vs Feature Importance:</strong> Importance = does it matter? Effect = in what direction & magnitude does it push predictions?</li>
+        </ul>
+        <div class="interview-q"><span class="q-label">💬 Interview Q</span>"Your black-box model is 5% more accurate than logistic regression. But the regulator won't approve it. What do you do?" Answer: Use SHAP/LIME to explain it, or stick with logistic regression.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'ml',12)">
+      <div class="card-header">
+        <div class="card-title">MLOps & Model Deployment</div>
+        <div class="card-meta"><span class="badge badge-imp">IMP</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Model Serving:</strong> How do you get predictions from a trained model in production? REST API (FastAPI, Flask), batch scoring, streaming.</p>
+        <p><strong>Monitoring & Drift Detection:</strong> In production, data changes. Features shift (covariate shift), labels shift (concept drift). Monitor with PSI (Population Stability Index), track prediction distribution.</p>
+        <p><strong>A/B Testing:</strong> Deploy new model to 10% of users. Compare metrics vs baseline. Statistical significance?</p>
+        <p><strong>CI/CD for ML:</strong> Automate retraining, testing, deployment. Tools: MLflow, Kubeflow, DVC, Jenkins.</p>
+        <div class="code-block"><span class="comment"># Basic drift detection pattern:</span>
+if PSI(current_data, historical_data) > threshold:
+    alert("Data drift detected. Retrain model.")</div>
+      </div>
+    </div>
+
+    <div class="section-label">Case Studies</div>
+
+    <div class="card" onclick="toggle(this,'ml',12)">
+      <div class="card-header">
+        <div class="card-title">Case Study: Probability of Default (PD) Models</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p>Core banking regulation (Basel III/IV). Banks build these for credit risk assessment.</p>
+        <ul class="points">
+          <li>Binary classification: will borrower default within 12 months?</li>
+          <li>Regulatory constraints: logistic regression preferred (interpretable), must document everything</li>
+          <li>Key features: LTV ratio, debt-to-income, payment history, macroeconomic variables</li>
+          <li>Validation: discriminatory power (Gini/AUC), calibration (actual vs predicted default rates), stability (PSI)</li>
+        </ul>
+        <div class="tip-box"><span class="tip-label">💡 Tip</span>Show you understand why interpretability matters in regulated models. Regulators need to understand why the model made each decision — black box models alone won't pass regulatory review.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'ml',12)">
+      <div class="card-header">
+        <div class="card-title">Case Study: Supply Chain Risk Analytics</div>
+        <div class="card-meta"><span class="badge badge-nice">Nice</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p>Combines live data feeds + AI risk scoring for supply chains. Key concepts:</p>
+        <ul class="points">
+          <li>Graph-based supply chain modelling (nodes = suppliers, edges = dependencies)</li>
+          <li>Real-time NLP on news to detect risk events (geopolitical, weather, financial distress)</li>
+          <li>Risk propagation: if Tier-1 supplier fails, how does risk cascade?</li>
+          <li>Anomaly detection on logistics data (shipment delays, order cancellations)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'ml',12)">
+      <div class="card-header">
+        <div class="card-title">Case Study: Climate & ESG Analytics</div>
+        <div class="card-meta"><span class="badge badge-nice">Nice</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p>Climate & Sustainability is a growing analytics practice. Key concepts:</p>
+        <ul class="points">
+          <li>Banks need to align loan portfolios with Paris Agreement targets</li>
+          <li>Optimisation problem: minimise carbon intensity subject to return constraints</li>
+          <li>Data inputs: company emissions (Scope 1/2/3), sector transition pathways, green asset classifications</li>
+          <li>ML angle: predict future emissions trajectories, identify green vs stranded assets</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ML BASICS -->
+  <div id="tab-basics" class="section">
+    <div class="progress-bar">
+      <span class="progress-label">Topics covered</span>
+      <div class="progress-track"><div class="progress-fill" id="basics-progress" style="width:0%"></div></div>
+      <span class="progress-count" id="basics-count">0 / 6</span>
+    </div>
+
+    <div class="section-label">Core Concepts</div>
+
+    <div class="card" onclick="toggle(this,'basics',6)">
+      <div class="card-header">
+        <div class="card-title">What is Machine Learning?</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p>Traditional programming: you write explicit rules (if X > 5, do Y). Machine Learning: you show the model examples, it learns the pattern.</p>
+        <p><strong>The ML Pipeline:</strong> Raw data → Cleaning → Feature engineering → Model training → Evaluation → Deployment → Monitoring.</p>
+        <div class="code-block"><span class="comment"># Traditional</span>
+if income > 50k and credit_score > 700:
+    approve_loan()
+
+<span class="comment"># ML approach</span>
+model = train_on_historical_approvals_and_defaults()
+prediction = model.predict([income, credit_score, age, ...])</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'basics',6)">
+      <div class="card-header">
+        <div class="card-title">Data: Features, Labels, Training vs Test</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Features (X):</strong> The inputs. Example: [age, income, credit_score]. Can be numerical or categorical.</p>
+        <p><strong>Labels (y):</strong> The target you're predicting. Example: [approved, denied]. Only available in training data.</p>
+        <p><strong>Training set:</strong> Data you use to train the model. Model "sees" labels here.</p>
+        <p><strong>Test set:</strong> Held out data. Model has never seen these labels. Used to measure performance on unseen data.</p>
+        <p><strong>Golden rule:</strong> Never train on test data. It causes overfitting and lies about performance.</p>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'basics',6)">
+      <div class="card-header">
+        <div class="card-title">The Curse of Dimensionality</div>
+        <div class="card-meta"><span class="badge badge-imp">IMP</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p>More features = more data needed to train well. In high dimensions, most data points are far apart → model struggles to generalise.</p>
+        <p><strong>Example:</strong> 100 features, 1000 rows. Each feature has ~10 unique values per row on average. Sparse! Model overfits.</p>
+        <p><strong>Solutions:</strong> Feature selection (keep only important ones), dimensionality reduction (PCA), regularization, or collect more data.</p>
+        <div class="tip-box"><span class="tip-label">💡 Tip</span>Rule of thumb: aim for at least 10-20 training examples per feature. 100 features with 1000 rows? You're cutting it close.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'basics',6)">
+      <div class="card-header">
+        <div class="card-title">Imbalanced Classes & Sampling</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p>Real world: positive class (e.g., fraud, default, churn) is rare. 99% negative, 1% positive. Standard models ignore the minority class.</p>
+        <ul class="points">
+          <li><strong>Over-sampling:</strong> Duplicate minority examples. Fast but can overfit.</li>
+          <li><strong>Under-sampling:</strong> Remove majority examples. Loses data, may miss patterns.</li>
+          <li><strong>SMOTE:</strong> Synthetic Minority Over-sampling Technique. Generate synthetic minority examples by interpolating between real ones.</li>
+          <li><strong>Class weights:</strong> Tell the model: "I care more about getting the minority class right." Penalize minority misclassifications more.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'basics',6)">
+      <div class="card-header">
+        <div class="card-title">Feature Engineering & Scaling</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Feature Engineering:</strong> Create new features from raw data. Example: from [birth_date], create [age, is_over_65]. Domain knowledge + experimentation.</p>
+        <p><strong>Scaling:</strong> Models like KNN, SVM, neural nets are sensitive to feature magnitude. Standardize (mean 0, std 1) or normalise (min-max to [0,1]).</p>
+        <p><strong>Encoding Categorical Data:</strong> One-hot encoding (create binary column per category), ordinal encoding (assign numbers), embeddings (learned representations).</p>
+        <div class="code-block"><span class="comment"># Example: one-hot encoding</span>
+color = ['red', 'blue', 'red']
+→ color_red = [1, 0, 1]
+→ color_blue = [0, 1, 0]</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'basics',6)">
+      <div class="card-header">
+        <div class="card-title">Loss Functions & Optimization</div>
+        <div class="card-meta"><span class="badge badge-imp">IMP</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Loss function:</strong> Measures how wrong the model is. Lower loss = better model. Examples: MSE (regression), cross-entropy (classification).</p>
+        <p><strong>Optimization:</strong> Adjust model weights to minimize loss. Gradient descent: compute gradient (slope of loss), step in the direction that reduces it.</p>
+        <p><strong>Learning rate:</strong> Step size. Too high → overshoot minima (diverge). Too low → crawl slowly (take forever).</p>
+        <p><strong>Variants:</strong> SGD (update per sample), mini-batch (update per batch), Adam (adaptive learning rate per parameter).</p>
+        <div class="tip-box"><span class="tip-label">💡 Tip</span>Adam is often the "set it and forget it" choice. If loss doesn't decrease, try lowering learning rate or checking for bugs in data preprocessing.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GENAI / LLMS -->
+  <div id="tab-genai" class="section">
+    <div class="progress-bar">
+      <span class="progress-label">Topics covered</span>
+      <div class="progress-track"><div class="progress-fill" id="genai-progress" style="width:0%"></div></div>
+      <span class="progress-count" id="genai-count">0 / 9</span>
+    </div>
+
+    <div class="section-label">Foundations</div>
+
+    <div class="card" onclick="toggle(this,'genai',9)">
+      <div class="card-header">
+        <div class="card-title">Transformers & Attention Mechanism</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Transformers:</strong> Architecture that powers modern LLMs (ChatGPT, Claude, Llama). Replaced RNNs because they parallelize better and handle long-range dependencies.</p>
+        <p><strong>Attention:</strong> Mechanism that lets the model focus on relevant parts of the input. Multi-head attention = multiple "views" of relevance.</p>
+        <p><strong>Positional Encoding:</strong> Transformers don't have inherent sequence order (unlike RNNs). Positional embeddings tell the model word order.</p>
+        <p><strong>Self-Attention:</strong> Each token attends to all other tokens. Learns what to focus on. Queries, Keys, Values (Q, K, V) framework.</p>
+        <div class="code-block"><span class="comment"># Attention equation (simplified)</span>
+Attention(Q, K, V) = softmax(Q * K^T / sqrt(d_k)) * V
+<span class="comment"># High scores = strong attention</span></div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'genai',9)">
+      <div class="card-header">
+        <div class="card-title">Pre-training, Tokenization & Embeddings</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Tokenization:</strong> Split text into tokens (words, subwords, or bytes). LLMs use subword tokenization (BPE, SentencePiece) → better for rare words.</p>
+        <p><strong>Embeddings:</strong> Each token maps to a dense vector (e.g., 768-dim). "King" - "Man" + "Woman" ≈ "Queen" (vector arithmetic captures semantics).</p>
+        <p><strong>Pre-training:</strong> Train on huge corpus (Common Crawl, Books, Wikipedia) with self-supervised objectives:</p>
+        <ul class="points">
+          <li><strong>MLM (Masked Language Model):</strong> Hide 15% of tokens, predict them. BERT uses this.</li>
+          <li><strong>Causal LM (Next Token Prediction):</strong> Given context, predict next token. GPT uses this.</li>
+        </ul>
+        <p>Result: Model learns grammar, facts, reasoning without labeled data.</p>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'genai',9)">
+      <div class="card-header">
+        <div class="card-title">Fine-tuning vs RAG vs Prompt Engineering</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Decision Framework:</strong> What's the best way to adapt a pre-trained LLM for your task?</p>
+        <ul class="points">
+          <li><strong>Prompt Engineering:</strong> Craft the prompt carefully. In-context learning. Fast, cheap, no training. Good for general tasks. Limited by context window.</li>
+          <li><strong>RAG (Retrieval-Augmented Generation):</strong> Embed company documents, retrieve relevant ones at inference time, pass to LLM. Good for private/domain data. No model updates needed.</li>
+          <li><strong>Fine-tuning:</strong> Update model weights on domain data. Expensive (compute + data labeling). Best performance on specialized tasks. Slower inference sometimes.</li>
+        </ul>
+        <div class="tip-box"><span class="tip-label">💡 Tip</span><strong>When to use which:</strong> Task straightforward? Prompt engineering. Have domain docs? RAG. Accuracy critical & have $$? Fine-tune.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'genai',9)">
+      <div class="card-header">
+        <div class="card-title">Prompt Engineering & Few-Shot Learning</div>
+        <div class="card-meta"><span class="badge badge-imp">IMP</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Prompt Design:</strong> How you ask the LLM matters. Be specific. Chain of thought (CoT) = ask the model to explain its reasoning step-by-step before answering.</p>
+        <p><strong>Few-Shot Learning:</strong> Give 1-5 examples in the prompt. Model learns the pattern and applies it to new inputs.</p>
+        <div class="code-block"><span class="comment"># Zero-shot (bare minimum)</span>
+"Classify this review: 'Great product!'" 
+
+<span class="comment"># Few-shot (better)</span>
+"Examples: 'Love it' = positive, 'Broke in 2 days' = negative.
+Now classify: 'Great product!'"</div>
+        <div class="interview-q"><span class="q-label">💬 Interview Q</span>"You need to classify 10K support tickets. No budget for fine-tuning. What do you do?" Few-shot prompting + batch API.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'genai',9)">
+      <div class="card-header">
+        <div class="card-title">Agents & Tool Use</div>
+        <div class="card-meta"><span class="badge badge-imp">IMP</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>LLM Agents:</strong> Instead of just generating text, the LLM can take actions. Think, decide which tool to use, use it, get results, repeat.</p>
+        <p><strong>Tool Use / Function Calling:</strong> Define functions (APIs) the agent can call: fetch_weather(), search_web(), query_database(). Agent chooses which to invoke.</p>
+        <p><strong>ReAct Pattern:</strong> Reasoning + Acting. Agent reasons about what to do, takes action, observes result, refines reasoning.</p>
+        <ul class="points">
+          <li>Q: "What's the weather in Paris? How does it compare to London?"</li>
+          <li>Agent: "I need to fetch weather for both cities." → call fetch_weather("Paris") → call fetch_weather("London") → reason & answer.</li>
+        </ul>
+        <div class="tip-box"><span class="tip-label">💡 Tip</span>Agents can solve multi-step problems that pure prompt engineering can't. But they're slower & less reliable. Use for complex reasoning tasks, not simple classification.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'genai',9)">
+      <div class="card-header">
+        <div class="card-title">LLM Evaluation & Benchmarks</div>
+        <div class="card-meta"><span class="badge badge-imp">IMP</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Automatic Metrics:</strong> (Fast but imperfect)</p>
+        <ul class="points">
+          <li><strong>Perplexity:</strong> How surprised is the model at the ground truth? Lower = better. Used for language modeling.</li>
+          <li><strong>BLEU, ROUGE:</strong> N-gram overlap with reference. Good for summarisation/translation. Not perfect (multiple good answers exist).</li>
+        </ul>
+        <p><strong>Benchmarks:</strong></p>
+        <ul class="points">
+          <li><strong>MMLU:</strong> 57K multiple choice questions (science, history, law, ...). Tests general knowledge.</li>
+          <li><strong>HumanEval:</strong> Code generation. Does the model write correct Python/etc?</li>
+          <li><strong>Domain-specific:</strong> FinBENCH (finance), BioBENCH (biology), etc.</li>
+        </ul>
+        <p><strong>Human Evaluation:</strong> Gold standard but expensive. Rating scale (1-5), pairwise comparisons, red-teaming.</p>
+      </div>
+    </div>
+
+    <div class="section-label">Applications</div>
+
+    <div class="card" onclick="toggle(this,'genai',9)">
+      <div class="card-header">
+        <div class="card-title">Hallucinations & Limitations</div>
+        <div class="card-meta"><span class="badge badge-imp">IMP</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Hallucination:</strong> Model invents facts that aren't true. "What's the capital of Atlantis?" → LLM might confidently give a wrong answer.</p>
+        <p><strong>Why:</strong> LLMs predict the next token based on patterns, not understanding. They don't check facts against a database.</p>
+        <p><strong>Mitigations:</strong></p>
+        <ul class="points">
+          <li>Use RAG: retrieve facts from a source of truth first</li>
+          <li>Fine-tune on accurate data</li>
+          <li>Use smaller models that are more conservative</li>
+          <li>Add guardrails: "If you don't know, say 'I don't know'"</li>
+          <li>Fact-check outputs programmatically when possible</li>
+        </ul>
+        <div class="tip-box"><span class="tip-label">💡 Tip</span>In regulated/high-stakes domains (finance, healthcare), assume hallucination is possible. Always validate LLM outputs.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'genai',9)">
+      <div class="card-header">
+        <div class="card-title">AI Readiness Assessment</div>
+        <div class="card-meta"><span class="badge badge-nice">Nice</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p>When evaluating whether an organisation is ready to deploy AI/LLM solutions, consider:</p>
+        <ul class="points">
+          <li><strong>Data maturity:</strong> Do they have clean, labeled, sufficient data? Can it be accessed reliably?</li>
+          <li><strong>Infrastructure:</strong> Can they run/serve models? Do they have ML ops tooling?</li>
+          <li><strong>Governance:</strong> Are there policies for model validation, audit trails, responsible AI?</li>
+          <li><strong>Talent:</strong> Do they have ML engineers, data scientists? Or need external help?</li>
+          <li><strong>Business case:</strong> What's the ROI? Is it solving a real problem or a solution in search of a problem?</li>
+          <li><strong>Change management:</strong> Are employees ready? Will they use it? Any resistance?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'genai',9)">
+      <div class="card-header">
+        <div class="card-title">Case Study: LLM/Chatbot Validation Framework</div>
+        <div class="card-meta"><span class="badge badge-imp">IMP</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p>When deploying a customer-facing chatbot, a structured validation framework covers:</p>
+        <ul class="points">
+          <li><strong>Functional testing:</strong> Does it answer intended questions correctly?</li>
+          <li><strong>Hallucination testing:</strong> Does it confabulate details or make up facts?</li>
+          <li><strong>Adversarial/red-teaming:</strong> Can prompts trick it into harmful outputs?</li>
+          <li><strong>Bias testing:</strong> Does it treat all user demographics fairly?</li>
+          <li><strong>Regulatory compliance:</strong> Does output comply with regulations (e.g., financial advice disclosures)?</li>
+          <li><strong>Latency & reliability:</strong> Can it handle production load? What's the SLA?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- NLP -->
+  <div id="tab-nlp" class="section">
+    <div class="progress-bar">
+      <span class="progress-label">Topics covered</span>
+      <div class="progress-track"><div class="progress-fill" id="nlp-progress" style="width:0%"></div></div>
+      <span class="progress-count" id="nlp-count">0 / 8</span>
+    </div>
+
+    <div class="section-label">Foundations</div>
+
+    <div class="card" onclick="toggle(this,'nlp',8)">
+      <div class="card-header">
+        <div class="card-title">Word Embeddings (Word2Vec, GloVe, FastText)</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Word2Vec:</strong> Predict context from word (skip-gram) or word from context (CBOW). Learns dense vectors. "King" - "man" + "woman" ≈ "Queen".</p>
+        <p><strong>GloVe:</strong> Combines count-based (co-occurrence matrices) and predictive (Word2Vec) methods. Often slightly better than Word2Vec.</p>
+        <p><strong>FastText:</strong> Like Word2Vec but operates on character n-grams. Better for rare words & morphology. Good for non-English languages.</p>
+        <p><strong>Why embeddings?</strong> Raw text is high-dimensional and sparse. Embeddings are dense, low-dimensional, and capture semantics.</p>
+        <div class="interview-q"><span class="q-label">💬 Interview Q</span>"Why not just use one-hot encoding for words?" It's sparse (100K vocab = 100K features), doesn't capture similarity. Embeddings solve this.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'nlp',8)">
+      <div class="card-header">
+        <div class="card-title">Recurrent Neural Networks (RNNs, LSTMs, GRUs)</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>RNNs:</strong> Process sequences one step at a time. Hidden state at step t depends on input & hidden state from t-1. Captures temporal/sequential info.</p>
+        <p><strong>Problem:</strong> Vanishing gradient. As sequences get long, gradients shrink → hard to learn long-range dependencies.</p>
+        <p><strong>LSTMs (Long Short-Term Memory):</strong> Gating mechanism (input, forget, output gates) controls information flow. Solves vanishing gradient. Still used for some tasks.</p>
+        <p><strong>GRUs:</strong> Simpler than LSTMs (fewer gates). Similar performance, faster to train.</p>
+        <p><strong>Today:</strong> Transformers replaced RNNs for most tasks (faster, better, scales better). But RNNs are still useful for some applications.</p>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'nlp',8)">
+      <div class="card-header">
+        <div class="card-title">Text Classification & Sentiment Analysis</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Task:</strong> Assign labels to text. Examples: spam vs not spam, positive/negative/neutral sentiment, topic classification.</p>
+        <p><strong>Approaches:</strong></p>
+        <ul class="points">
+          <li>Bag-of-words → logistic regression or SVM. Fast baseline.</li>
+          <li>TF-IDF features → any classifier. Good for interpretability.</li>
+          <li>Word embeddings → feed to neural net. Better semantics.</li>
+          <li>Pre-trained transformers (BERT, DistilBERT) → fine-tune. SOTA, but slower & requires GPU.</li>
+        </ul>
+        <div class="code-block"><span class="comment"># Sentiment example</span>
+text = "This movie was amazing!"
+embedding = word2vec(text)  <span class="comment"># average word vectors</span>
+sentiment = classifier.predict(embedding)  <span class="comment"># positive</span></div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'nlp',8)">
+      <div class="card-header">
+        <div class="card-title">Named Entity Recognition (NER) & Relation Extraction</div>
+        <div class="card-meta"><span class="badge badge-imp">IMP</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>NER:</strong> Identify entities (people, locations, organisations) and their types in text. Example: "Apple CEO Tim Cook" → [PERSON: Tim Cook, ORG: Apple].</p>
+        <p><strong>Approaches:</strong> Rule-based (regex, dictionary lookup), BiLSTM-CRF (sequence tagging), transformer-based (BERT + linear layer).</p>
+        <p><strong>Relation Extraction:</strong> Find relationships between entities. Example: "Tim Cook works at Apple" → relation: [PERSON, works_at, ORG].</p>
+        <p><strong>Use cases:</strong> Knowledge graphs, information extraction from documents, financial news analysis, contract parsing.</p>
+        <div class="tip-box"><span class="tip-label">💡 Tip</span>For low-resource domains (legal documents, medical texts), fine-tune a pre-trained BERT on domain-specific data.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'nlp',8)">
+      <div class="card-header">
+        <div class="card-title">Question Answering & Reading Comprehension</div>
+        <div class="card-meta"><span class="badge badge-nice">Nice</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Task:</strong> Given a context passage and a question, find or generate the answer.</p>
+        <p><strong>Extractive QA:</strong> Answer is a span in the context. Model learns to predict start & end positions. Example: SQuAD benchmark. BERT fine-tuned for QA works well.</p>
+        <p><strong>Generative QA:</strong> Answer is generated (not from context). More flexible, harder. Examples: T5, GPT models.</p>
+        <p><strong>Open-domain QA:</strong> No context given. First retrieve relevant documents (BM25, dense retrieval), then extract/generate answer.</p>
+        <div class="interview-q"><span class="q-label">💬 Interview Q</span>"Build a QA system for customer support docs with 10K pages." Combine BM25 retrieval + BERT extractive QA, or use LLM with RAG.</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'nlp',8)">
+      <div class="card-header">
+        <div class="card-title">Machine Translation</div>
+        <div class="card-meta"><span class="badge badge-nice">Nice</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Task:</strong> Translate text from one language to another.</p>
+        <p><strong>Seq2Seq (Sequence-to-Sequence):</strong> Encoder-decoder. Encoder compresses source text into a context vector. Decoder generates target text step-by-step.</p>
+        <p><strong>Attention:</strong> Decoder attends to relevant encoder outputs at each step (not just final vector). Big improvement.</p>
+        <p><strong>Transformers:</strong> No recurrence, fully parallel. GPT/T5 style. SOTA.</p>
+        <p><strong>Challenges:</strong> Rare words, idioms, long-range dependencies, domain mismatch. Back-translation for data augmentation.</p>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggle(this,'nlp',8)">
+      <div class="card-header">
+        <div class="card-title">Sequence-to-Sequence & Summarisation</div>
+        <div class="card-meta"><span class="badge badge-nice">Nice</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p><strong>Seq2Seq Architecture:</strong> Encoder-decoder framework. Encoder processes input sequence, decoder generates output sequence. Used for translation, summarisation, Q&A.</p>
+        <p><strong>Attention Mechanism:</strong> At each decoder step, attend to relevant encoder hidden states. Without it, decoder only sees a single compressed vector (information bottleneck).</p>
+        <p><strong>Beam Search:</strong> Decoder generates tokens one-by-one. At each step, keep top-k hypotheses. Avoids greedy locally-optimal choices.</p>
+        <p><strong>Abstractive vs Extractive Summarisation:</strong></p>
+        <ul class="points">
+          <li><strong>Extractive:</strong> Select important sentences from source. Fast, faithful to source, but may be incoherent.</li>
+          <li><strong>Abstractive:</strong> Generate new sentences (rewrite). More human-like. Harder — requires seq2seq. May hallucinate.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-label">Case Studies</div>
+
+    <div class="card" onclick="toggle(this,'nlp',8)">
+      <div class="card-header">
+        <div class="card-title">Case Study: Credit Rating Prediction with NLP</div>
+        <div class="card-meta"><span class="badge badge-core">Core</span><span class="toggle-icon">+</span></div>
+      </div>
+      <div class="card-body">
+        <p>End-to-end NLP project: predict credit rating downgrades using news articles and historical data.</p>
+        <ul class="points">
+          <li><strong>Data:</strong> News articles scraped daily + historical credit ratings from S&P/Moody's</li>
+          <li><strong>NLP:</strong> NER to extract company names → link to ratings → sentiment & event classification on articles</li>
+          <li><strong>ML:</strong> Binary classification (downgrade in next 30/60/90 days). Features: NLP signals + financial metrics</li>
+          <li><strong>Challenge:</strong> Imbalanced (downgrades rare), noisy labels, lag between news and rating action</li>
+          <li><strong>Validation:</strong> Out-of-time validation, not random CV (news from future shouldn't affect training)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const opened = { ml: new Set(), genai: new Set(), nlp: new Set(), basics: new Set() };
+
+  function toggle(card, section, total) {
+    const isOpen = card.classList.contains('open');
+    card.classList.toggle('open', !isOpen);
+    const idx = Array.from(document.querySelectorAll('#tab-' + section + ' .card')).indexOf(card);
+    if (!isOpen) opened[section].add(idx);
+    updateProgress(section, total);
+  }
+
+  function updateProgress(section, total) {
+    const count = opened[section].size;
+    const pct = (count / total) * 100;
+    document.getElementById(section + '-progress').style.width = pct + '%';
+    document.getElementById(section + '-count').textContent = count + ' / ' + total;
+  }
+
+  function switchTab(tab) {
+    document.querySelectorAll('#tab-ml, #tab-basics, #tab-genai, #tab-nlp').forEach(s => s.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
